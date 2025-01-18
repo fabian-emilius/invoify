@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { IconButton } from '@mui/material';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
