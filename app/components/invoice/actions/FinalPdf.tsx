@@ -4,7 +4,7 @@
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 // Components
-import { BaseButton, SendPdfToEmailModal, Subheading } from "@/app/components";
+import { BaseButton, SendPdfToEmailModal, Subheading, FullscreenPdfModal } from "@/app/components";
 
 // Contexts
 import { useInvoiceContext } from "@/contexts/InvoiceContext";
@@ -15,6 +15,7 @@ import {
     DownloadCloudIcon,
     Eye,
     Mail,
+    Maximize,
     MoveLeft,
     Printer,
 } from "lucide-react";
@@ -55,6 +56,18 @@ export default function FinalPdf() {
                     <Eye className="w-5 h-5" />
                     Preview
                 </BaseButton>
+
+                <FullscreenPdfModal>
+                    <BaseButton
+                        tooltipLabel="View in fullscreen"
+                        size="sm"
+                        variant={"outline"}
+                    >
+                        <Maximize className="w-5 h-5" />
+                        Fullscreen
+                    </BaseButton>
+                </FullscreenPdfModal>
+
                 <BaseButton
                     tooltipLabel="Download invoice PDF"
                     onClick={downloadPdf}

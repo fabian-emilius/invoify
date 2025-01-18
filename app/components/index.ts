@@ -98,6 +98,8 @@ import SendPdfEmail from "./templates/email/SendPdfEmail";
    ========================= */
 import DevDebug from "./dev/DevDebug";
 
+export { FullscreenPdfModal } from './modals/invoice/FullscreenPdfModal';
+
 export {
     BaseNavbar,
     BaseFooter,
