@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 // ShadCn
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -35,20 +35,24 @@ export default function FinalPdf() {
 
     const [isFullscreen, setIsFullscreen] = useState(false);
 
-    const toggleFullscreen = () => {
+    const toggleFullscreen = useCallback(() => {
         const iframe = document.querySelector('iframe');
         if (!iframe) return;
 
         if (!isFullscreen) {
             if (iframe.requestFullscreen) {
-                iframe.requestFullscreen();
+                iframe.requestFullscreen().catch(err => {
+                    console.error('Error attempting to enable fullscreen:', err);
+                });
             }
         } else {
             if (document.exitFullscreen) {
-                document.exitFullscreen();
+                document.exitFullscreen().catch(err => {
+                    console.error('Error attempting to exit fullscreen:', err);
+                });
             }
         }
-    };
+    }, [isFullscreen]);
 
     useEffect(() => {
         const handleFullscreenChange = () => {
@@ -140,6 +144,7 @@ export default function FinalPdf() {
                 <iframe
                     className="h-full w-full rounded-xl"
                     src={`${pdfUrl}#toolbar=0`}
+                    title="PDF Viewer"
                 />
             </AspectRatio>
         </>
