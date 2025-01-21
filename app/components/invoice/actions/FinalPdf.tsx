@@ -1,5 +1,7 @@
 "use client";
 
+import { useState, useEffect } from 'react';
+
 // ShadCn
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
@@ -15,6 +17,7 @@ import {
     DownloadCloudIcon,
     Eye,
     Mail,
+    Maximize2,
     MoveLeft,
     Printer,
 } from "lucide-react";
@@ -29,6 +32,34 @@ export default function FinalPdf() {
         saveInvoice,
         sendPdfToMail,
     } = useInvoiceContext();
+
+    const [isFullscreen, setIsFullscreen] = useState(false);
+
+    const toggleFullscreen = () => {
+        const iframe = document.querySelector('iframe');
+        if (!iframe) return;
+
+        if (!isFullscreen) {
+            if (iframe.requestFullscreen) {
+                iframe.requestFullscreen();
+            }
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        }
+    };
+
+    useEffect(() => {
+        const handleFullscreenChange = () => {
+            setIsFullscreen(document.fullscreenElement !== null);
+        };
+
+        document.addEventListener('fullscreenchange', handleFullscreenChange);
+        return () => {
+            document.removeEventListener('fullscreenchange', handleFullscreenChange);
+        };
+    }, []);
 
     return (
         <>
@@ -95,6 +126,15 @@ export default function FinalPdf() {
                         Send to mail
                     </BaseButton>
                 </SendPdfToEmailModal>
+                <BaseButton
+                    tooltipLabel="Toggle fullscreen"
+                    onClick={toggleFullscreen}
+                    size="sm"
+                    variant={"outline"}
+                >
+                    <Maximize2 className="w-5 h-5" />
+                    Fullscreen
+                </BaseButton>
             </div>
             <AspectRatio ratio={1 / 1.4}>
                 <iframe
